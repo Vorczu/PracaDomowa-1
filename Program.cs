@@ -6,7 +6,7 @@ public class Program
 	public static void Main()
 	{
         var newPerson = Person.ConsolePersonInit();
-        Person.ConsoleePersonInfo(newPerson);
+        newPerson.ConsoleePersonInfo();
         Console.ReadLine();
     }
 }

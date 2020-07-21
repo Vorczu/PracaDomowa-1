@@ -92,7 +92,7 @@ public class Person
         return newPerson;
     }
 
-private static int AgeCalculator(DateTime BirthDate)
+private int AgeCalculator(DateTime BirthDate)
     {
         if (BirthDate.Month <= DateTime.Now.Month)
         {
@@ -123,12 +123,12 @@ private static int AgeCalculator(DateTime BirthDate)
         return true;
     }
 
-    public static void ConsoleePersonInfo(Person person)
+    public void ConsoleePersonInfo()
     {
-        var sex = person.FirstName.EndsWith('a') ? "Urodziłaś" : "Urodziłeś";
+        var sex = FirstName.EndsWith('a') ? "Urodziłaś" : "Urodziłeś";
         Console.WriteLine(
             $"Witaj!\n" +
-            $"Twoje imię to {person.FirstName} a nazwisko {person.LastName}\n" +
-            $"{sex} się w miejscowości { person.BirthPlace} w { person.BirthDate.ToString("dd.MM.yyyy") } roku i aktualnie masz { person.Age}");
+            $"Twoje imię to {FirstName} a nazwisko {LastName}\n" +
+            $"{sex} się w miejscowości {BirthPlace} w {BirthDate.ToString("dd.MM.yyyy") } roku i aktualnie masz {Age}");
     }
 }
