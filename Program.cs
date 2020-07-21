@@ -5,8 +5,8 @@ public class Program
 {
 	public static void Main()
 	{
-		Person.SimplePersonInfo(Person.PersonBuilder());
-
-		Console.ReadKey();
-	}
+        var newPerson = Person.ConsolePersonInit();
+        Person.ConsoleePersonInfo(newPerson);
+        Console.ReadLine();
+    }
 }

@@ -1,51 +1,98 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 
 public class Person
 {
-    public string _firstName { get; set; }
-    public string _lastName { get; set; }
-    public string _birthPlace { get; set; }
-    public int _age { get; }
-    public DateTime _birthDate { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string BirthPlace { get; set; }
+    public int Age { get; }
+    public DateTime BirthDate { get; set; }
 
-    public Person(DateTime BrithDate)
+    private static Dictionary<string, string> _personDictInfo;
+
+    public Person()
     {
-        _age = AgeCalculator(BrithDate);
+
+
+    }
+    public Person(string BrithDate)
+    {
+        Age = AgeCalculator(DateTime.Parse(BrithDate));
     }
 
-    public static Person PersonBuilder()
+
+    public static Person ConsolePersonInit()
     {
+        _personDictInfo = new Dictionary<string, string>();
 
         Console.WriteLine("WITAJ PODRÓZNIKU!\n");
-        Console.Write("Podaj imię: ");
-        var firstName = PersonStringDataCheck(Console.ReadLine());
-        Console.Clear();
-
-        Console.Write("Podaj nazwisko: ");
-        var lastName = PersonStringDataCheck(Console.ReadLine());
-        Console.Clear();
-
-        Console.Write("Podaj miejsce urodzenia: ");
-        var birthPlace = PersonStringDataCheck(Console.ReadLine());
-        Console.Clear();
-
-        Console.Write("Podaj datę urodzenia w formacie 'dd.MM.rrrr' : ");
-        var birthDate = DataFormat(Console.ReadLine());
-        Console.Clear();
-
-        var newPerson = new Person(birthDate)
+        try
         {
-            _firstName = firstName,
-            _lastName = lastName,
-            _birthPlace = birthPlace,
-            _birthDate = birthDate,
+            Console.Write("Podaj imię: ");
+            var firstName = Console.ReadLine();
+            if (PersonDataCheck(firstName))
+                _personDictInfo.Add("FirstName", firstName);
+            else
+                throw new ArgumentException("First Name");
+            Console.Clear();
+
+            Console.Write("Podaj nazwisko: ");
+            var lastName = Console.ReadLine();
+            if (PersonDataCheck(lastName))
+                _personDictInfo.Add("LastName", lastName);
+            else
+                throw new ArgumentException("Last Name");
+            Console.Clear();
+
+            Console.Write("Podaj miejsce urodzenia: ");
+            var birthPlace = Console.ReadLine();
+            if (PersonDataCheck(birthPlace))
+                _personDictInfo.Add("Birthplace", birthPlace);
+            else
+                throw new ArgumentException("Birthplace");
+            Console.Clear();
+
+            Console.Write("Podaj datę urodzenia w formacie 'dd.MM.rrrr' : ");
+            var birthDate = Console.ReadLine();
+            if (PersonDateFormat(birthDate))
+                _personDictInfo.Add("DateOfBirth", birthDate);
+            else
+                throw new ArgumentException("Birth Date");
+            Console.Clear();
+        }
+        catch (ArgumentException)
+        {
+            Console.Clear();
+            Console.WriteLine($"Błędne podane dane!");
+            ConsolePersonInit();
+        }
+        
+
+        return PersonBuilder(_personDictInfo);
+    }
+
+    private static Person PersonBuilder(Dictionary<string, string> PersonDataList)
+    {
+        // To replace || Object initialize from collection
+        var firstNameIndex = PersonDataList.Single(x => x.Key == "FirstName");
+        var lastNameIndex = PersonDataList.Single(x => x.Key == "LastName");
+        var birthPlaceIndex = PersonDataList.Single(x => x.Key == "Birthplace");
+        var birthDateIndex = PersonDataList.Single(x => x.Key == "DateOfBirth");
+
+        var newPerson = new Person(birthDateIndex.Value)
+        {
+            FirstName = firstNameIndex.Value,
+            LastName = lastNameIndex.Value,
+            BirthPlace = birthPlaceIndex.Value,
+            BirthDate = DateTime.Parse(birthDateIndex.Value)
         };
         return newPerson;
     }
 
-    private static int AgeCalculator(DateTime BirthDate)
+private static int AgeCalculator(DateTime BirthDate)
     {
         if (BirthDate.Month <= DateTime.Now.Month)
         {
@@ -61,62 +108,27 @@ public class Person
         return 0;
     }
 
-    private static string PersonStringDataCheck(string Textdata)
+    private static bool PersonDataCheck(string Textdata)
     {
-        if (Textdata.All(Char.IsLetter))
-        {
-            return Textdata;
-        }else
-        {
-            Console.WriteLine("Błędne dane!!! Imię, nazwisko oraz miejsce urodzenie nie może zawierać cyfr oraz znaków!");
-            FormFillError();
-        }
-        return null;
+        return Textdata.All(Char.IsLetter) ? true : false;
     }
 
-    public static DateTime DataFormat(string DataText)
+    private static bool PersonDateFormat(string DateText)
     {
-        DateTime data = new DateTime(1111,1,1);
         try
-        {
-            data = DateTime.Parse(DataText, null);
-        }
+        { DateTime.Parse(DateText, null); }
         catch (Exception)
-        {
-            Console.WriteLine("Niepoprawny format daty");
-            FormFillError();
-        }
+        { return false; }
 
-        return data;
+        return true;
     }
 
-    private static void FormFillError()
+    public static void ConsoleePersonInfo(Person person)
     {
-        Console.Write("Czy chcesz ponownie wypełnićp pola? [Tak - T || Nie - N]: ");
-        var decheck = Console.ReadLine();
-        if (decheck == "T")
-        {
-            SimplePersonInfo(PersonBuilder());
-            Console.Clear();
-        }
-        else if (decheck == "N")
-        {
-            Environment.Exit(0);
-        }
-        else
-        {
-            Console.WriteLine("Błędny wpis!");
-            Console.WriteLine("=====================");
-            FormFillError();
-        }
-    }
-
-    public static void SimplePersonInfo(Person person)
-    {
-        var sex = person._firstName.EndsWith('a') ? "Urodziłaś" : "Urodziłeś";
+        var sex = person.FirstName.EndsWith('a') ? "Urodziłaś" : "Urodziłeś";
         Console.WriteLine(
             $"Witaj!\n" +
-            $"Twoje imię to {person._firstName} a nazwisko {person._lastName}\n" +
-            $"{sex} się w miejscowości { person._birthPlace} w { person._birthDate.ToString("dd.MM.yyyy") } roku i aktualnie masz { person._age}");
+            $"Twoje imię to {person.FirstName} a nazwisko {person.LastName}\n" +
+            $"{sex} się w miejscowości { person.BirthPlace} w { person.BirthDate.ToString("dd.MM.yyyy") } roku i aktualnie masz { person.Age}");
     }
 }
