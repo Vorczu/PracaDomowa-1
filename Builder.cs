@@ -57,5 +57,15 @@ namespace PracaDomowa
 
             return Person.PersonBuilder(_personDictInfo);
         }
+
+        public static void ConsoleePersonInfo(Person person)
+        {
+            var sex = person.FirstName.EndsWith('a') ? "Urodziłaś" : "Urodziłeś";
+            Console.WriteLine(
+                $"Witaj!\n" +
+                $"Twoje imię to {person.FirstName} a nazwisko {person.LastName}\n" +
+                $"{sex} się w miejscowości {person.BirthPlace} w {person.BirthDate.ToString("dd.MM.yyyy") } roku i aktualnie masz {person.Age}");
+        }
+
     }
 }

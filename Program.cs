@@ -7,7 +7,7 @@ public class Program
 	public static void Main()
 	{
         var newPerson = Builder.ConsolePersonInit();
-        newPerson.ConsoleePersonInfo();
+        Builder.ConsoleePersonInfo(newPerson);
         Console.ReadLine();
     }
 }
