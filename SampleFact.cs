@@ -8,7 +8,6 @@ namespace PracaDomowa
     {
         private static Dictionary<string, string> _personDictInfo;
 
-
         public static Person CreatePerson()
         {
             _personDictInfo = new Dictionary<string, string>();
