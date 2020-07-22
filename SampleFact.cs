@@ -4,11 +4,12 @@ using System.Text;
 
 namespace PracaDomowa
 {
-    static class Builder
+    static class SampleFact
     {
         private static Dictionary<string, string> _personDictInfo;
 
-        public static Person ConsolePersonInit()
+
+        public static Person CreatePerson()
         {
             _personDictInfo = new Dictionary<string, string>();
 
@@ -51,20 +52,10 @@ namespace PracaDomowa
             {
                 Console.Clear();
                 Console.WriteLine($"Błędne podane dane!");
-                ConsolePersonInit();
+                CreatePerson();
             }
 
-
             return Person.PersonBuilder(_personDictInfo);
-        }
-
-        public static void ConsoleePersonInfo(Person person)
-        {
-            var sex = person.FirstName.EndsWith('a') ? "Urodziłaś" : "Urodziłeś";
-            Console.WriteLine(
-                $"Witaj!\n" +
-                $"Twoje imię to {person.FirstName} a nazwisko {person.LastName}\n" +
-                $"{sex} się w miejscowości {person.BirthPlace} w {person.BirthDate.ToString("dd.MM.yyyy") } roku i aktualnie masz {person.Age}");
         }
 
     }

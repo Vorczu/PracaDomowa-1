@@ -1,13 +1,13 @@
 ﻿using PracaDomowa;
 using System;
-using System.Collections.Generic;
 
 public class Program
 {
-	public static void Main()
+
+    public static void Main()
 	{
-        var newPerson = Builder.ConsolePersonInit();
-        Builder.ConsoleePersonInfo(newPerson);
+        var newPerson = SampleFact.CreatePerson();
+        newPerson.ConsoleePersonInfo();
         Console.ReadLine();
     }
 }

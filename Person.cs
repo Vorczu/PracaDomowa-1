@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 
 public class Person
 {
@@ -10,11 +9,6 @@ public class Person
     public string BirthPlace { get; set; }
     public int Age { get; }
     public DateTime BirthDate { get; set; }
-
-    public Person()
-    {
-
-    }
 
     public Person(string BrithDate)
     {
@@ -70,5 +64,12 @@ public class Person
         return true;
     }
 
-
+    public void ConsoleePersonInfo()
+    {
+        var sex = FirstName.EndsWith('a') ? "Urodziłaś" : "Urodziłeś";
+        Console.WriteLine(
+            $"Witaj!\n" +
+            $"Twoje imię to {FirstName} a nazwisko {LastName}\n" +
+            $"{sex} się w miejscowości {BirthPlace} w {BirthDate.ToString("dd.MM.yyyy") } roku i aktualnie masz {Age}");
+    }
 }
