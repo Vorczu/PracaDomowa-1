@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PracaDomowa;
+using System;
 using System.Collections.Generic;
 
 public class Program
 {
 	public static void Main()
 	{
-        var newPerson = Person.ConsolePersonInit();
+        var newPerson = Builder.ConsolePersonInit();
         newPerson.ConsoleePersonInfo();
         Console.ReadLine();
     }

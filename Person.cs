@@ -11,7 +11,7 @@ public class Person
     public int Age { get; }
     public DateTime BirthDate { get; set; }
 
-    private static Dictionary<string, string> _personDictInfo;
+    
 
     public Person()
     {
@@ -24,57 +24,9 @@ public class Person
     }
 
 
-    public static Person ConsolePersonInit()
-    {
-        _personDictInfo = new Dictionary<string, string>();
 
-        Console.WriteLine("WITAJ PODRÓZNIKU!\n");
-        try
-        {
-            Console.Write("Podaj imię: ");
-            var firstName = Console.ReadLine();
-            if (PersonDataCheck(firstName))
-                _personDictInfo.Add("FirstName", firstName);
-            else
-                throw new ArgumentException("First Name");
-            Console.Clear();
 
-            Console.Write("Podaj nazwisko: ");
-            var lastName = Console.ReadLine();
-            if (PersonDataCheck(lastName))
-                _personDictInfo.Add("LastName", lastName);
-            else
-                throw new ArgumentException("Last Name");
-            Console.Clear();
-
-            Console.Write("Podaj miejsce urodzenia: ");
-            var birthPlace = Console.ReadLine();
-            if (PersonDataCheck(birthPlace))
-                _personDictInfo.Add("Birthplace", birthPlace);
-            else
-                throw new ArgumentException("Birthplace");
-            Console.Clear();
-
-            Console.Write("Podaj datę urodzenia w formacie 'dd.MM.rrrr' : ");
-            var birthDate = Console.ReadLine();
-            if (PersonDateFormat(birthDate))
-                _personDictInfo.Add("DateOfBirth", birthDate);
-            else
-                throw new ArgumentException("Birth Date");
-            Console.Clear();
-        }
-        catch (ArgumentException)
-        {
-            Console.Clear();
-            Console.WriteLine($"Błędne podane dane!");
-            ConsolePersonInit();
-        }
-        
-
-        return PersonBuilder(_personDictInfo);
-    }
-
-    private static Person PersonBuilder(Dictionary<string, string> PersonDataList)
+    public static Person PersonBuilder(Dictionary<string, string> PersonDataList)
     {
         // To replace || Object initialize from collection
         var firstNameIndex = PersonDataList.Single(x => x.Key == "FirstName");
@@ -92,7 +44,7 @@ public class Person
         return newPerson;
     }
 
-private int AgeCalculator(DateTime BirthDate)
+    private int AgeCalculator(DateTime BirthDate)
     {
         if (BirthDate.Month <= DateTime.Now.Month)
         {
@@ -108,12 +60,12 @@ private int AgeCalculator(DateTime BirthDate)
         return 0;
     }
 
-    private static bool PersonDataCheck(string Textdata)
+    public static bool PersonDataCheck(string Textdata)
     {
         return Textdata.All(Char.IsLetter) ? true : false;
     }
 
-    private static bool PersonDateFormat(string DateText)
+    public static bool PersonDateFormat(string DateText)
     {
         try
         { DateTime.Parse(DateText, null); }
