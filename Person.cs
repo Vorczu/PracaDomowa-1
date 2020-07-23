@@ -10,27 +10,15 @@ public class Person
     public int Age { get; }
     public DateTime BirthDate { get; set; }
 
-    public Person(string BrithDate)
-    {
-        Age = AgeCalculator(DateTime.Parse(BrithDate));
-    }
-
-    public static Person PersonBuilder(Dictionary<string, string> PersonDataList)
+    public Person(Dictionary<string, string> PersonDataList)
     {
         // To replace || Object initialize from collection
-        var firstNameIndex = PersonDataList.Single(x => x.Key == "FirstName");
-        var lastNameIndex = PersonDataList.Single(x => x.Key == "LastName");
-        var birthPlaceIndex = PersonDataList.Single(x => x.Key == "Birthplace");
-        var birthDateIndex = PersonDataList.Single(x => x.Key == "DateOfBirth");
+        FirstName = PersonDataList.Single(x => x.Key == "FirstName").Value.ToString();
+        LastName = PersonDataList.Single(x => x.Key == "LastName").Value.ToString();
+        BirthPlace = PersonDataList.Single(x => x.Key == "Birthplace").Value.ToString();
+        BirthDate = DateTime.Parse(PersonDataList.Single(x => x.Key == "DateOfBirth").Value);
+        Age = AgeCalculator(BirthDate);
 
-        var newPerson = new Person(birthDateIndex.Value)
-        {
-            FirstName = firstNameIndex.Value,
-            LastName = lastNameIndex.Value,
-            BirthPlace = birthPlaceIndex.Value,
-            BirthDate = DateTime.Parse(birthDateIndex.Value)
-        };
-        return newPerson;
     }
 
     private int AgeCalculator(DateTime BirthDate)
